@@ -8,7 +8,7 @@ export function CartProvider({ children }) {
   function addSeat(seat) {
     // seat: { id, row, number, price, sessionId }
     setItems((prev) => {
-      // prevent duplicates
+      // prevent duplicates...
       const exists = prev.some((s) => s.id === seat.id);
       if (exists) return prev;
       return [...prev, seat];
@@ -36,7 +36,7 @@ export function CartProvider({ children }) {
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
-// Nice helper hook so we can call useCart() anywhere
+// helper hook for being able to call useCart() anywhere!
 export function useCart() {
   const ctx = useContext(CartContext);
   if (!ctx) {
