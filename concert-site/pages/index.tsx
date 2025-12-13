@@ -36,7 +36,8 @@ export default function Home({ concerts }: HomeProps) {
 
 // fetch data from Django backed on each request
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
-  const res = await fetch("http://127.0.0.1:8000/concerts/");
+  const res = await fetch("const res = await fetch("https://backend-concert.liara.run/");
+");
   const data: ConcertListResponse = await res.json();
 
   return {
