@@ -16,16 +16,16 @@ type CartContextValue = {
   totalPrice: number;
 };
 
-const CartContext = createContext<CartContextValue |null>(null);
+const CartContext = createContext<CartContextValue | null>(null);
 
 type CartProviderProps = {
   children: ReactNode;
 }
 
-export function CartProvider({ children }) {
-  const [items, setItems] = useState([]); // each item = seat
+export function CartProvider({ children }: CartProviderProps) {
+  const [items, setItems] = useState<Seat[]>([]); // each item = seat
 
-  function addSeat(seat) {
+  function addSeat(seat: Seat) {
     // seat: { id, row, number, price, sessionId }
     setItems((prev) => {
       // prevent duplicates...
@@ -35,7 +35,7 @@ export function CartProvider({ children }) {
     });
   }
 
-  function removeSeat(seatId) {
+  function removeSeat(seatId: number) {
     setItems((prev) => prev.filter((s) => s.id !== seatId));
   }
 
@@ -45,7 +45,7 @@ export function CartProvider({ children }) {
 
   const totalPrice = items.reduce((sum, seat) => sum + seat.price, 0);
 
-  const value = {
+  const value: CartContextValue = {
     items,
     addSeat,
     removeSeat,
@@ -53,7 +53,9 @@ export function CartProvider({ children }) {
     totalPrice,
   };
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={value}>
+    {children}
+  </CartContext.Provider>;
 }
 
 // helper hook for being able to call useCart() anywhere!
