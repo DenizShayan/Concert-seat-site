@@ -1,16 +1,40 @@
 import { GetServerSideProps } from "next";
-import { ConcertListResponse, Concert } from "../types/api";
+import { ConcertListResponse, Concert, Slider } from "../types/api";
+import { useMemo, useState } from "react";
+
 
 type HomeProps = {
+  sliders: Slider[];
   concerts: Concert[];
 };
 
 export default function Home({ concerts }: HomeProps) {
+
+  const [query, setQuery] = useState("");
+  const [type, setType] = useState("all");
+
+  const filteredConcerts = useMemo(() => {
+    return concerts.filter((c) => {
+      const q = query.trim().toLowerCase();
+
+      const matchesQuery =
+        q.length === 0
+          ? true
+          : c.concert_name.toLowerCase().includes(q) ||
+          c.artist_name.toLowerCase().includes(q) ||
+          c.concert_location.toLowerCase().includes(q);
+
+      const matchesType = type === "all" ? true : c.concert_type === type;
+
+      return matchesQuery && matchesType;
+    });
+  }, [concerts, query, type]);
+
   return (
     <main className="min-h-screen bg-slate-900 text-white px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Concerts 🎵</h1>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {concerts.map((concert) => (
+        {filteredConcerts.map((concert) => (
           <article
             key={concert.id}
             className="rounded-xl border border-slate-700 bg-slate-800/60 p-4 hover:border-emerald-400 transition"
@@ -43,6 +67,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
   return {
     props: {
       concerts: data.concerts,
+      sliders: data.sliders,
     },
   };
 
