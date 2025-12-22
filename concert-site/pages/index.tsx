@@ -1,7 +1,7 @@
 import { GetServerSideProps } from "next";
 import { ConcertListResponse, Concert, Slider } from "../types/api";
 import { useMemo, useState } from "react";
-
+import Link from "next/link":}
 
 type HomeProps = {
   sliders: Slider[];
@@ -12,6 +12,8 @@ export default function Home({ concerts }: HomeProps) {
 
   const [query, setQuery] = useState("");
   const [type, setType] = useState("all");
+  const [slideIndex, setSlideIndex] = useState(0);
+  const activeSlide = sliders.length > 0 ? 
 
   const filteredConcerts = useMemo(() => {
     return concerts.filter((c) => {
