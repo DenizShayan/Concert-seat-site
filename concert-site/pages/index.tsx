@@ -1,11 +1,11 @@
 import { GetServerSideProps } from "next";
 import { ConcertListResponse, Concert, Slider } from "../types/api";
+import Link from "next/link";
 import { useMemo, useState } from "react";
-import Link from "next/link":}
 
 type HomeProps = {
-  sliders: Slider[];
   concerts: Concert[];
+  sliders: Slider[];
 };
 
 export default function Home({ concerts }: HomeProps) {
@@ -13,7 +13,11 @@ export default function Home({ concerts }: HomeProps) {
   const [query, setQuery] = useState("");
   const [type, setType] = useState("all");
   const [slideIndex, setSlideIndex] = useState(0);
-  const activeSlide = sliders.length > 0 ? 
+  const activeSlide = sliders.length > 0 ? sliders[slideIndex] : null;
+
+  function nextSlide() {
+    setSlideIndex((i) => (sliders.leng)
+  }
 
   const filteredConcerts = useMemo(() => {
     return concerts.filter((c) => {
