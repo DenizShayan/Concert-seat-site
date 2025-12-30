@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 
 type HomeProps = {
-  concerts: Concert[];
-  sliders: Slider[];
+  concerts: Concert[],
+  sliders: Slider[],
 };
 
 export default function Home({ concerts }: HomeProps) {
